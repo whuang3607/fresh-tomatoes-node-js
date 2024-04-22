@@ -24,11 +24,11 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
   })
 );
 const sessionOptions = {
-  secret: 'any string',
+  secret: process.env.SESSION_SECRET || 'any string',
   resave: false,
   saveUninitialized: false,
 };
@@ -37,6 +37,7 @@ if (process.env.NODE_ENV !== 'development') {
   sessionOptions.cookie = {
     sameSite: 'none',
     secure: true,
+    domain: process.env.HTTP_SERVER_DOMAIN,
   };
 }
 
@@ -50,4 +51,4 @@ MovieRoutes(app);
 Hello(app);
 testMovieRoutes(app);
 TestReviewRoutes(app);
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
