@@ -58,14 +58,17 @@ function WatchlistRoutes(app) {
   // };
 
   const deleteWatchlist = async (req, res) => {
-    const status = await watchlistdoa.deleteWatchlist(req.params.watchlistId);
+    const status = await watchlistdoa.deleteWatchlist(
+      req.params.userId,
+      req.params.movieId
+    );
     res.json(status);
   };
 
   app.post('/api/watchlist', createWatchlist);
   app.get('/api/watchlist/:userId', findWatchlistByUserID);
   // app.put('/api/watchlist/:watchlistId', updateWatchlist);
-  app.delete('/api/watchlist/:watchlistId', deleteWatchlist);
+  app.delete('/api/watchlist/:userId/:movieId', deleteWatchlist);
 }
 
 export default WatchlistRoutes;
