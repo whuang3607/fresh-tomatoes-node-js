@@ -8,7 +8,7 @@ function UserRoutes(app) {
       ? new Date(req.body.dob + 'T00:00:00Z').toISOString()
       : null;
     console.log('Converted DOB:', req.body.dob);
-    const user = await dao.createUser(req.body);
+    const user = await dao.createreUser(req.body);
     res.json(user);
   };
   const deleteUser = async (req, res) => {
