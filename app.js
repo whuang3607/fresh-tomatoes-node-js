@@ -16,7 +16,7 @@ import TestReviewRoutes from './testReviews/review_routes.js';
 // const CONNECTION_STRING = 'mongodb://127.0.0.1:27017/Kanbas'
 //Natasha's db
 //const CONNECTION_STRING = 'mongodb://127.0.0.1:27017/kanbas'
-const CONNECTION_STRING = 'mongodb+srv://admin:admin@cluster0.j09aedf.mongodb.net/test?retryWrites=true&w=majority'
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || 'mongodb+srv://admin:admin@cluster0.j09aedf.mongodb.net/test?retryWrites=true&w=majority'
 mongoose.connect(CONNECTION_STRING);
 
 
@@ -24,15 +24,15 @@ const app = express();
 app.use(cors(
     {
         credentials: true,
-        origin: "http://localhost:3000",
+        origin: process.env.FRONTEND_URL || "http://localhost:3000",
       }
 ));
 const sessionOptions = {
-    secret: "any string",
+    secret: process.env.SESSION_SECRET || "any string",
     resave: false,
     saveUninitialized: false,
   };
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV === "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {
       sameSite: "none",
